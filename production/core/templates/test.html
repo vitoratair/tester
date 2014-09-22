@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br><br><br>
+
+    <div class="container content">
+        <div class="title-box">
+            <div class="title-box-text">Jiga de teste para o switch x</div>
+            <p>
+                texto texto texto texto texto texto texto texto texto texto texto texto
+            </p>
+        </div>
+
+        <div class="margin-bottom-40"></div>
+
+
+        <div class="row" align="center">
+            <div class="col-md-12">
+                <div id="message"></div>
+            </div>
+        </div>
+    </div>
+
+
+<script type="text/javascript">
+
+$( window ).load(function() {
+
+    window.setInterval(function() {
+            $.get( "/testStatus/", function( data ) {
+                if (data.message != undefined)
+                {
+                    $( "#message" ).empty();
+                    $( "#message" ).append( "<p> " + data.message +  "</p>" );
+                }
+            });
+    }, 1000);
+});
+
+
+</script>
+
+{% endblock content %}
