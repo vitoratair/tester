@@ -5,7 +5,9 @@ import commands
 import json
 import time
 from production.core.production_commands import *
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/')
 def home(request):
 	"""
 		Must be return the index template

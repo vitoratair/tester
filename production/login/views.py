@@ -1,37 +1,42 @@
 # coding: utf-8
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from production.login.forms import LoginForm
-from production.login.models import Login
 import json
+from django.contrib import auth
+
+def validate(request):
+    """
+        Must be validate and save the user on django session
+    """
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return HttpResponseRedirect('/core/')
+    else:
+        return render(request, 'login/index.html')
 
 
 def home(request):
     """
-        Esse método tem por objetivo exibir o template para logim do usuário
+        Must be check if user is active or not and display the correct template.
     """
 
-    loginNumbers = Login.objects.count()
-
-    if loginNumbers == 0:
-        db = Login(email='admin@admin.com.br', password='admin', username='admin', perfil_id=1)
-        db.save()
+    if request.user.is_active == True:
+        return HttpResponseRedirect('/core/')
 
     return render(request, 'login/index.html')
 
-
-def validate(request):
+def logout(request):
     """
-        Esse método tem por objetivo verificar
-        no banco de dados as credenciais de username e password do usuário
+        Must be logout the user
     """
 
-    if request.POST:
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+    auth.logout(request)
 
-    if Login.objects.filter(password=password, username=username).count() == 0:
-        return render(request, 'login/index.html')
-
-    return HttpResponseRedirect('/core/')
-
+    return HttpResponseRedirect('/')
