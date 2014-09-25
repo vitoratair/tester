@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^core/', include('production.core.urls', namespace='core')),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',{'document_root': settings.MEDIA_ROOT}),
-    url(r'', include('production.core.urls', namespace='core')),
+    url(r'', include('production.login.urls', namespace='login')),
 )
 
 if settings.DEBUG:

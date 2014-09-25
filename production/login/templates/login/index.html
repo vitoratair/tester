@@ -1,0 +1,38 @@
+{% extends 'login_base.html' %}
+
+{% block content %}
+
+<body>
+
+<div class="container">
+
+    <div class="reg-block">
+        <div class="reg-block-header">
+            <h2>Sign in</h2>
+        </div>
+
+        <form action="/validate/" method="POST" id="" align="center" class="">
+            {% csrf_token %}
+            <div class="input-group margin-bottom-20">
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                <input type="text" name="username" class="form-control" placeholder="Username">
+            </div>
+            <div class="input-group margin-bottom-20">
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                <input type="password" name="password" class="form-control" placeholder="Password">
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <button type="submit" class="btn-u btn-block">Sign in</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
+
+{% endblock content %}
