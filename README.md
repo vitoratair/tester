@@ -30,13 +30,13 @@ source bin/activate
 3 - Install the <b>requirements</b>
 
 ```
-pip install -r requirements.txt
+make deps
 ```
 
 4 - Sync the <b>database</b>
 
 ```
-(switch-tester)~VIRTUAL_ENV|master ⇒ python manage.py syncdb
+python manage.py syncdb
 Creating tables ...
 Installing custom SQL ...
 Installing indexes ...
@@ -46,7 +46,13 @@ Installed 0 object(s) from 0 fixture(s)
 5 - Run the <b>web server</b>
 
 ```
-(switch-tester)~VIRTUAL_ENV|master ⇒ python manage.py runserver
+make
+```
+
+or 
+
+```
+python manage.py runserver
 Validating models...
 0 errors found
 June 27, 2014 - 19:13:51
@@ -54,6 +60,5 @@ Django version 1.6, using settings 'switch-tester.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.	
 ```
-
 
 
