@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'production.login',
     'production.core',
     'production.product',
+    'production.iperf',
 )
 
 MIDDLEWARE_CLASSES = (
