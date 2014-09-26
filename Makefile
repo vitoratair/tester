@@ -8,3 +8,6 @@ clean:
 deps:
 	@pip install -r requirements.txt
 
+sync:
+	python manage.py syncdb
+	python manage.py migrate	
