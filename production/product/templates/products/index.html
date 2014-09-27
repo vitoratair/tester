@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+	<div class="container content">
+
+		<div class="headline">
+			<h2>List of products</h2>
+		</div>
+
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Site</th>
+                            <th>Product Type</th>
+                            <th>Access Method</th>
+                            <th>Default on system</th>
+                            <th>Tests available</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    	{%  for product in products %}
+                            <tr>
+                                <td>{{ product.id }}</td>
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.site }}</td>
+                                <td>{{ product.typeProduct }}</td>
+                                <td>{{ product.accessMethod }}</td>
+
+								{% if product.default == False %}
+									<td><span class="label label-warning">No</span></td>
+								{% else %}
+									<td><span class="label label-success">Yes</span></td>
+								{% endif %}
+
+								<td><button class="btn btn-success btn-xs">Show</button></td>
+								<td>
+								</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+    	</div>
+
+
+{% endblock content %}

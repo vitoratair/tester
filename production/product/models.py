@@ -2,7 +2,7 @@
 from django.db import models
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-
+from production.ping.models import Ping
 
 class Product(models.Model):
 
@@ -16,12 +16,15 @@ class Product(models.Model):
 	typeProduct = models.ForeignKey('TypeProduct')
 	accessMethod = models.CharField(_(u'Communication'), max_length=10, choices=accessMethodOptions)
 	default = models.BooleanField(_(u'Default on system'))
-
+	pingTest = models.ManyToManyField('ping.Ping', blank=True)
 
 	class Meta:
 		ordering = ['id']
 		verbose_name = _(u'Produto')
 		verbose_name_plural = _(u'Produtos')
+
+	def get_ping(self):
+		return self.pingTest.all()
 
 	def __unicode__(self):
 		return self.name
