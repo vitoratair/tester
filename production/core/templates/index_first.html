@@ -4,18 +4,43 @@
 
 
 	<div class="container content">
-        <div class="title-box">
-            <div class="title-box-text">Switch tester</div>
-            <br>
-            <a href="/testBoard/" class="btn btn-u" type="button">START TEST</a>
-        </div>
-        <br><br>
 
-		<div class="row" align="center">
-            <div class="col-md-12">
-            {{status}}
+        <div class="shadow-wrapper">
+            <div class="tag-box tag-box-v1 box-shadow shadow-effect-2">
+                <h1 align="center">
+                    Default product is not available
+                </h1>
+
+                <br><br>
+
+                <form action="/core/setDefaultProduct/" id="sky-form4" class="sky-form" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <fieldset>
+                                    <section>
+                                        <label class="select">
+                                            <select name="product">
+                                                {% for product in products %}
+                                                    <option value="{{ product.id }}">{{ product.name }} </option>
+                                                {% endfor %}
+                                            </select>
+                                            <i></i>
+                                        </label>
+                                    </section>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer>
+                        <button type="submit" class="btn-u">Submit</button>
+                    </footer>
+                </form>
             </div>
         </div>
+
     </div>
 
 
