@@ -15,6 +15,8 @@ class Product(models.Model):
 	site = models.URLField(_(u'Product Site'), blank=True)
 	typeProduct = models.ForeignKey('TypeProduct')
 	accessMethod = models.CharField(_(u'Communication'), max_length=10, choices=accessMethodOptions)
+	default = models.BooleanField(_(u'Default on system'))
+
 
 	class Meta:
 		ordering = ['id']
