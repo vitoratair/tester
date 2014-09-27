@@ -2,7 +2,6 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
-from production.login.forms import LoginForm
 import json
 from django.contrib import auth
 
