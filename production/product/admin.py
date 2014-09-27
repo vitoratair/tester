@@ -3,7 +3,7 @@ from models import Product, TypeProduct
 
 
 class ProductAdmin(admin.ModelAdmin):
-	list_display = ('id', 'name', 'TypeProduct')
+	list_display = ('id', 'name', 'site', 'typeProduct', 'accessMethod')
 
 
 class TypeProductAdmin(admin.ModelAdmin):

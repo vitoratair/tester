@@ -6,17 +6,23 @@ from django.utils.translation import ugettext_lazy as _
 
 class Product(models.Model):
 
-    name = models.CharField(_(u'Product Name'), max_length=100, unique=True)
-    site = models.URLField(_(u'Product Site'))
-    TypeProduct = models.ForeignKey('TypeProduct')
+	accessMethodOptions = (
+	    ('SSH', 'SSH communication'),
+	    ('CGI', 'CGI communication'),
+    )
 
-    class Meta:
-        ordering = ['id']
-        verbose_name = _(u'Produto')
-        verbose_name_plural = _(u'Produtos')
+	name = models.CharField(_(u'Product Name'), max_length=100, unique=True)
+	site = models.URLField(_(u'Product Site'), blank=True)
+	typeProduct = models.ForeignKey('TypeProduct')
+	accessMethod = models.CharField(_(u'Communication'), max_length=10, choices=accessMethodOptions)
 
-    def __unicode__(self):
-        return self.name
+	class Meta:
+		ordering = ['id']
+		verbose_name = _(u'Produto')
+		verbose_name_plural = _(u'Produtos')
+
+	def __unicode__(self):
+		return self.name
 
 
 class TypeProduct(models.Model):
