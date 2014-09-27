@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'production.login',
     'production.core',
     'production.product',
+    'production.ping',
     'production.iperf',
 )
 
