@@ -2,8 +2,8 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
-import json
 from django.contrib import auth
+from production.product.models import Product
 
 def validate(request):
     """
@@ -11,6 +11,7 @@ def validate(request):
     """
     username = request.POST['username']
     password = request.POST['password']
+
     user = authenticate(username=username, password=password)
 
     if user is not None:
@@ -29,13 +30,16 @@ def home(request):
     if request.user.is_active == True:
         return HttpResponseRedirect('/core/')
 
-    return render(request, 'login/index.html')
+    products = Product.objects.all()
+
+    return render(request, 'login/index.html', {'products': products})
 
 def logout(request):
     """
         Must be logout the user
     """
 
+    Product.objects.all().update(default=0)
     auth.logout(request)
 
     return HttpResponseRedirect('/')
