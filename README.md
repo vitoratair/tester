@@ -1,4 +1,5 @@
-[![Code Health](https://landscape.io/github/vitoratair/switch-tester/master/landscape.png)](https://landscape.io/github/vitoratair/switch-tester/master)
+[![Build Status](https://travis-ci.org/vitoratair/switch-tester.svg?branch=master)](https://travis-ci.org/vitoratair/switch-tester) [![Code Health](https://landscape.io/github/vitoratair/switch-tester/master/landscape.png)](https://landscape.io/github/vitoratair/switch-tester/master)
+
 
 # Project switch-tester
 ======
