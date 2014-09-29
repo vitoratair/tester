@@ -12,7 +12,6 @@ sync:
 	python manage.py syncdb
 
 test:
-	@pip install -r test_requirements.txt
-	@coverage run --source='production.core' manage.py test
-	@coverage report
-	@#flake8 production
+	pip install -r test_requirements.txt
+	coverage run --source='production' manage.py test
+	coverage report
