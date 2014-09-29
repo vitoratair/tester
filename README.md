@@ -1,3 +1,5 @@
+[![Code Health](https://landscape.io/github/vitoratair/switch-tester/master/landscape.png)](https://landscape.io/github/vitoratair/switch-tester/master)
+
 # Project switch-tester
 ======
 
