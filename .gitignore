@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 bin
 build
 include
@@ -16,7 +15,6 @@ production/staticfiles
 media/
 .coverage
 _build
-=======
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -71,4 +69,3 @@ docs/_build/
 
 # PyBuilder
 target/
->>>>>>> 9e7020923f3344385ccd3cbde823592c94d82e3b
