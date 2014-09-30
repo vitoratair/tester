@@ -4,8 +4,49 @@
 
 
 	<div class="container content">
+        <div class="title-box">
+            <div class="title-box-text">Ping</div>
+            <p>
+            	Ping uses the ICMP protocol's mandatory ECHO_REQUEST datagram to elicit an ICMP ECHO_RESPONSE from a host or gateway. ECHO_REQUEST datagrams (``pings'') have an IP and ICMP header, followed by a struct timeval and then an arbitrary number of ``pad'' bytes used to fill out the packet.
+            </p>
+        </div>
 
+        <div class="margin-bottom-40">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Origin IP</th>
+                            <th>Destination IP</th>
+                            <th>Interval</th>
+                            <th>Packet Number </th>
+                            <th>Made by user</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    	{%  for ping in pings %}
+                            <tr>
+                                <td>{{ ping.id }}</td>
+                                <td>{{ ping.name }}</td>
+                                <td>{{ ping.ipOrigin }}</td>
+                                <td>{{ ping.ipDestination }}</td>
+                                <td>{{ ping.interval }}</td>
+                                <td>{{ ping.packetNumber }}</td>
+                                <td>{{ ping.setByUser }}</td>
+								<td></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+        </div>
 
+		<div class="row" align="center">
+            <div class="col-md-12">
+                <div id="message"></div>
+            </div>
+        </div>
     </div>
 
 
