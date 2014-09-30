@@ -1,4 +1,6 @@
-[![Build Status](https://travis-ci.org/vitoratair/switch-tester.svg?branch=master)](https://travis-ci.org/vitoratair/switch-tester) [![Code Health](https://landscape.io/github/vitoratair/switch-tester/master/landscape.png)](https://landscape.io/github/vitoratair/switch-tester/master)
+[![Coverage Status](https://coveralls.io/repos/vitoratair/switch-tester/badge.png)](https://coveralls.io/r/vitoratair/switch-tester)
+[![Build Status](https://travis-ci.org/vitoratair/switch-tester.svg?branch=master)](https://travis-ci.org/vitoratair/switch-tester)
+[![Code Health](https://landscape.io/github/vitoratair/switch-tester/master/landscape.png)](https://landscape.io/github/vitoratair/switch-tester/master)
 
 
 # Project switch-tester
