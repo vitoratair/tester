@@ -13,4 +13,5 @@ sync:
 
 test:
 	pip install -r test_requirements.txt
-	python manage.py test
+	@coverage run --source='production' manage.py test
+	@coverage report
