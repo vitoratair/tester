@@ -19,7 +19,9 @@ def home(request):
 		products = Product.objects.all()
 		return render(request, 'index_first.html', {'products':products})
 
-	return render(request, 'test.html')
+	defaultProduct = Product.objects.filter(default=1).get()
+
+	return render(request, 'test.html', {'product': defaultProduct})
 
 
 def setDefaultProduct(request):

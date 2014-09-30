@@ -1,33 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<br><br><br>
 
-    <div class="container content">
-        <div class="title-box">
-            <div class="title-box-text">Switch tester</div>
-            <p>
-                text text text text text text text text text text text text text text
-            </p>
-        </div>
+<div class="container content">
+    <div class="title-box">
+        <div class="title-box-text">{{ product }}</div>
+        <p>
+            The default product is <i>{{ product }}</i>
+        </p>
+    </div>
 
-        <div class="margin-bottom-40"></div>
+    <br>
 
-
-        <div class="row" align="center">
-            <div class="col-md-12">
-                <div id="message"></div>
-            </div>
+    <div class="margin-bottom-40" align="center">
+        <div id="startTest">
+            <a href="#" onclick="startTest();" class="bnt btn-u">START TEST</a>
         </div>
     </div>
 
 
+    <div class="row" align="center">
+        <div class="col-md-12">
+            <div id="message"></div>
+        </div>
+    </div>
+</div>
+
+
 <script type="text/javascript">
 
-$( window ).load(function() {
+function startTest()
+{
+    $("#startTest").empty();
 
     window.setInterval(function() {
-            $.get( "/testStatus/", function( data ) {
+            $.get( "/core/testStatus/", function( data ) {
                 if (data.message != undefined)
                 {
                     $( "#message" ).empty();
@@ -35,9 +42,7 @@ $( window ).load(function() {
                 }
             });
     }, 1000);
-});
-
-
+}
 </script>
 
 {% endblock content %}
