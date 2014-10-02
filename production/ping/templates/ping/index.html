@@ -21,7 +21,7 @@
 		        </p>
 		    </div>
 
-		    <table class="table">
+		    <table class="table" id="default-table">
 		        <thead>
 		            <tr>
 		                <th>#</th>
@@ -31,6 +31,7 @@
 		                <th>Interval</th>
 		                <th>Packet Number </th>
 		                <th>Made by user</th>
+                    	<th>Result</th>
 		                <th>Options</th>
 		            </tr>
 		        </thead>
@@ -43,8 +44,13 @@
 		                    <td>{{ ping.ipDestination }}</td>
 		                    <td>{{ ping.interval }}</td>
 		                    <td>{{ ping.packetNumber }}</td>
-		                    <td>{{ ping.setByUser }}</td>
-							<td></td>
+							<td>{{ ping.setByUser }}</td>
+							<td>Pass or fail</td>
+							<td>
+								<i class="fa fa-edit"></i>
+								 &nbsp;&nbsp;
+								<a href="#" onclick="deletePing('{{ping.id}}');" ><i class="fa fa-trash-o"></i></a>
+							</td>
 		                </tr>
 		            {% endfor %}
 		        </tbody>
@@ -52,6 +58,41 @@
 	    </div>
     </div>
 </div>
+
+<script type="text/javascript">
+
+	function deletePing(ping)
+	{
+		$.get( "/ping/delete/" + ping + "/", function(data){
+			console.log(data);
+			$("#default-table tbody").empty();
+
+	            $.each(data, function(i, item) {
+
+					$("#default-table tbody").append
+					(
+						'<tr>' +
+						'<td>' + item.pk + '</td>' +
+						'<td>' + item.fields.name + '</td>' +
+						'<td>' + item.fields.ipOrigin + '</td>' +
+						'<td>' + item.fields.ipDestination + '</td>' +
+						'<td>' + item.fields.interval + '</td>' +
+						'<td>' + item.fields.packetNumber + '</td>' +
+						'<td>' + item.fields.setByUser + '</td>' +
+						'<td>Pass or fail</td>' +
+						'<td>' +
+							'<i class="fa fa-edit"></i>' +
+							 '&nbsp;&nbsp;' +
+							'<a href="#" onclick="deletePing('+ item.pk + ');" ><i class="fa fa-trash-o"></i></a>' +
+						'</td>' +
+						'</tr>'
+					)
+            });
+		});
+	}
+
+
+</script>
 
 
 {% endblock content %}
