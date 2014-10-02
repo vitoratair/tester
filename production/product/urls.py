@@ -5,5 +5,6 @@ from django.conf.urls.static import static
 
 
 urlpatterns = patterns('production.product.views',
+	url(r'^getTest/(\d+)/$', 'getTest', name='product'),
     url(r'^list/$', 'list', name='product'),
 )

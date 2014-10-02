@@ -70,6 +70,10 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     "django.core.context_processors.request",
 )
 
+SERIALIZATION_MODULES = {
+    'json': 'wadofstuff.django.serializers.json'
+}
+
 ROOT_URLCONF = 'production.urls'
 
 DATABASES = {
@@ -98,4 +102,3 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = BASE_DIR.child('media')
 MEDIA_URL = '/media/'
-

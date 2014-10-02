@@ -36,14 +36,6 @@ def setDefaultProduct(request):
 	return HttpResponseRedirect('/core/')
 
 
-def testBoard(request):
-	"""
-		Must be return the test template
-	"""
-
-	return render(request, 'test.html')
-
-
 def testStatus(request):
 	"""
 		Must be return the json message about interface status
@@ -64,7 +56,7 @@ def getStatus():
 		Must be return the status on ethernet device
 	"""
 
-	status = commands.getoutput("ifconfig en3")
+	status = commands.getoutput("ifconfig en0")
 
 	if status.find(ACTIVE_VALUE) == NOT_FIND:
 		return False

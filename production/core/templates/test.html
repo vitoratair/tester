@@ -22,8 +22,36 @@
     <div class="row" align="center">
         <div class="col-md-12">
             <div id="message"></div>
+            <div id="loading"></div>
+            <div id="inprogress" style="display: none">
+
+                <div class="panel panel-green margin-bottom-40">
+                    <div class="panel-heading">
+                        <h3 align="left" class="panel-title"><i class="fa fa-tasks"></i>Ping</h3>
+                    </div>
+
+                    <table class="table" id="tableTest">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Test</th>
+                                <th>Waiting</th>
+                            </tr>
+                        </thead>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
         </div>
     </div>
+
 </div>
 
 
@@ -37,8 +65,41 @@ function startTest()
             $.get( "/core/testStatus/", function( data ) {
                 if (data.message != undefined)
                 {
-                    $( "#message" ).empty();
-                    $( "#message" ).append( "<p> " + data.message +  "</p>" );
+                    if (data.message == 'Board found')
+                    {
+                        $( "#message" ).empty();
+                        $( "#loading" ).empty();
+                        $( "#inprogress" ).show();
+
+                        $.get( "/product/getTest/{{product.id}}", function( dataTable ) {
+
+                            $( "#tableTest tbody" ).empty();
+
+                            $.each(dataTable, function(i, item) {
+                                console.log(item);
+                                $("#tableTest tbody").append
+                                (
+                                    '<tr>' +
+                                    '<td>' + item.pk + '</td>' +
+                                    '<td>' + item.fields.pingTest[1] + '</td>' +
+                                    '<td> ashdasd</td>' +
+                                    '</tr>'
+                                )
+                            });
+
+                        });
+
+
+                    }
+                    else
+                    {
+                        $( "#message" ).empty();
+                        $( "#loading" ).empty();
+                        $( "#inprogress" ).empty();
+                        $( "#message" ).append( "<h2> " + data.message +  "</h2>" );
+                        $( "#loading" ).append( "<img src='{{STATIC_URL}}assets/img/ajax-loader.gif'>" );
+                    }
+
                 }
             });
     }, 1000);
