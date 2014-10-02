@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container content">
+    <div class="title-box">
+        <div class="title-box-text">Tests associated with {{product.name}}</div>
+    </div>
+
+    <div class="margin-bottom-40">
+      {% if pings %}
+        <div class="panel panel-green margin-bottom-40">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-tasks"></i> Ping</h3>
+            </div>
+
+            <table class="table" id="ping-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Origin IP</th>
+                        <th>Destination IP</th>
+                        <th>Interval</th>
+                        <th>Packet Number </th>
+                        <th>Made by user</th>
+                          <th>Result</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {%  for ping in pings %}
+                        <tr>
+                            <td>{{ ping.id }}</td>
+                            <td>{{ ping.name }}</td>
+                            <td>{{ ping.ipOrigin }}</td>
+                            <td>{{ ping.ipDestination }}</td>
+                            <td>{{ ping.interval }}</td>
+                            <td>{{ ping.packetNumber }}</td>
+                  <td>{{ ping.setByUser }}</td>
+                  <td>Pass or fail</td>
+                  <td><a href="#" onclick="deletePing('{{ping.id}}');" ><i class="fa fa-trash-o"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+      {% endif %}
+    </div>
+</div>
+
+<script type="text/javascript">
+
+  function deletePing(ping)
+  {
+    $.get( "/ping/delete/" + ping + "/", function(data){
+
+      $("#ping-table tbody").empty();
+
+        $.each(data, function(i, item) {
+
+          $("#ping-table tbody").append
+          (
+            '<tr>' +
+            '<td>' + item.pk + '</td>' +
+            '<td>' + item.fields.name + '</td>' +
+            '<td>' + item.fields.ipOrigin + '</td>' +
+            '<td>' + item.fields.ipDestination + '</td>' +
+            '<td>' + item.fields.interval + '</td>' +
+            '<td>' + item.fields.packetNumber + '</td>' +
+            '<td>' + item.fields.setByUser + '</td>' +
+            '<td>Pass or fail</td>' +
+            '<td>' +
+              '<a href="#" onclick="deletePing('+ item.pk + ');" ><i class="fa fa-trash-o"></i></a>' +
+            '</td>' +
+            '</tr>'
+          )
+        });
+    });
+  }
+
+
+</script>
+
+
+{% endblock content %}
