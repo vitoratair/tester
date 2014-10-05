@@ -31,18 +31,18 @@
                 </thead>
                 <tbody>
                   {%  for ping in pings %}
-                        <tr>
-                            <td>{{ ping.id }}</td>
-                            <td>{{ ping.name }}</td>
-                            <td>{{ ping.ipOrigin }}</td>
-                            <td>{{ ping.ipDestination }}</td>
-                            <td>{{ ping.interval }}</td>
-                            <td>{{ ping.packetNumber }}</td>
-                  <td>{{ ping.setByUser }}</td>
-                  <td>Pass or fail</td>
-                  <td><a href="#" onclick="deletePing('{{ping.id}}');" ><i class="fa fa-trash-o"></i></a></td>
-                        </tr>
-                    {% endfor %}
+                    <tr>
+                        <td>{{ ping.id }}</td>
+                        <td>{{ ping.name }}</td>
+                        <td>{{ ping.ipOrigin }}</td>
+                        <td>{{ ping.ipDestination }}</td>
+                        <td>{{ ping.interval }}</td>
+                        <td>{{ ping.packetNumber }}</td>
+                        <td>{{ ping.setByUser }}</td>
+                        <td>Pass or fail</td>
+                        <td><a href="#" onclick="deletePing('{{ping.id}}');" ><i class="fa fa-trash-o"></i></a></td>
+                      </tr>
+                  {% endfor %}
                 </tbody>
             </table>
         </div>
