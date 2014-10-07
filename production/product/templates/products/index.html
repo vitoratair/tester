@@ -4,7 +4,7 @@
         <div class="headline">
             <h2>List of products</h2>
         </div>
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped" id="default-table">
             <thead>
                 <tr>
                     <th>#</th>
@@ -31,7 +31,11 @@
                         <td><span class="label label-success">Yes</span></td>
                     {% endif %}
                     <td><a href="/product/showTest/{{ product.id }}/" class="btn btn-success btn-xs">Show</a></td>
-                    <td></td>
+                    <td>
+                        <i class="fa fa-edit"></i>
+                         &nbsp;&nbsp;
+                        <a href="/product/delete/{{product.id}}/"><i class="fa fa-trash-o"></i></a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from production.product.models import Product
 from production.ping.models import Ping
 from production.ping.models import PingProduct as PingProduct
@@ -31,6 +31,12 @@ def getTest(request, product):
         "json", [pings], indent=4, relations=('object_type', 'individual',))
 
     return HttpResponse(json, mimetype='application/json')
+
+
+def delete(request, product):
+
+    Product.objects.filter(pk=product).delete()
+    return HttpResponseRedirect('/product/list/')
 
 
 def showTest(request, product):
