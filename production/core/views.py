@@ -1,4 +1,4 @@
-#coding: utf-8
+# coding: utf-8
 
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -11,54 +11,55 @@ from production.product.models import Product
 
 @login_required(login_url='/')
 def home(request):
-	"""
-		Must be return the index template or test template if already has a default product on the system
-	"""
+    """
+            Must be return the index template or test template if already has a
+            default product on the system
+    """
 
-	if Product.objects.filter(default=1).count() == 0:
-		products = Product.objects.all()
-		return render(request, 'index_first.html', {'products':products})
+    if Product.objects.filter(default=1).count() == 0:
+        products = Product.objects.all()
+        return render(request, 'index_first.html', {'products': products})
 
-	defaultProduct = Product.objects.filter(default=1).get()
+    defaultProduct = Product.objects.filter(default=1).get()
 
-	return render(request, 'test.html', {'product': defaultProduct})
+    return render(request, 'test.html', {'product': defaultProduct})
 
 
 def setDefaultProduct(request):
-	"""
-		Must be set a new product as default
-	"""
+    """
+            Must be set a new product as default
+    """
 
-	product = request.POST['product']
-	Product.objects.all().update(default=0)
-	Product.objects.filter(pk=product).update(default=1)
+    product = request.POST['product']
+    Product.objects.all().update(default=0)
+    Product.objects.filter(pk=product).update(default=1)
 
-	return HttpResponseRedirect('/core/')
+    return HttpResponseRedirect('/core/')
 
 
 def testStatus(request):
-	"""
-		Must be return the json message about interface status
-	"""
+    """
+            Must be return the json message about interface status
+    """
 
-	data = {}
+    data = {}
 
-	if getStatus():
-		data['message'] = BOARD_FOUND
-	else:
-		data['message'] = BOARD_NOT_FOUND
+    if getStatus():
+        data['message'] = BOARD_FOUND
+    else:
+        data['message'] = BOARD_NOT_FOUND
 
-	return HttpResponse(json.dumps(data), mimetype = "application/json")
+    return HttpResponse(json.dumps(data), mimetype="application/json")
 
 
 def getStatus():
-	"""
-		Must be return the status on ethernet device
-	"""
+    """
+            Must be return the status on ethernet device
+    """
 
-	status = commands.getoutput("ifconfig en0")
+    status = commands.getoutput("ifconfig en32323")
 
-	if status.find(ACTIVE_VALUE) == NOT_FIND:
-		return False
+    if status.find(ACTIVE_VALUE) == NOT_FIND:
+        return False
 
-	return True
+    return True

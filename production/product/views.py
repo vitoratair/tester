@@ -1,12 +1,15 @@
 from django.shortcuts import render, HttpResponse
 from production.product.models import Product
 from production.ping.models import Ping
+from production.ping.models import PingProduct as PingProduct
+
 from django.core import serializers
+from production.product.testCommands import *
 
 
 def list(request):
     """
-            Must be return a list of products
+        Must be return a list of products
     """
 
     products = Product.objects.all()
@@ -14,6 +17,9 @@ def list(request):
 
 
 def getTest(request, product):
+    """
+
+    """
 
     # ids = Product.objects.values_list('id', flat=True).filter(pk=product)
 
@@ -28,9 +34,17 @@ def getTest(request, product):
 
 
 def showTest(request, product):
+    """
+        Must be returned a list of tests associated with product
+    """
 
-    ids = Product.objects.values_list('pingTest', flat=True).filter(pk=product[0])
-    pings = Ping.objects.filter(id__in=set(ids))
-    product = Product.objects.filter(pk=product).get()
+    productName = Product.objects.filter(pk=product).get()
 
-    return render(request, 'products/product_tests.html', {'product': product, 'pings': pings})
+    tests = Product.objects.values_list('test', flat=True).filter(pk=product[0])
+
+    if PING in tests:
+        pings = PingProduct.objects.filter(product=product)
+
+
+    return render(request, 'products/product_tests.html', {'pings': pings,
+                                                           'product': productName})
