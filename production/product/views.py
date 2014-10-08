@@ -1,19 +1,29 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from production.product.models import Product
+from production.product.forms import ProductForm
 from production.ping.models import Ping
 from production.ping.models import PingProduct as PingProduct
-
 from django.core import serializers
 from production.product.testCommands import *
 
 
 def list(request):
     """
-        Must be return a list of products
+        Must be return a list of products or save a new product on database
     """
 
     products = Product.objects.all()
-    return render(request, 'products/index.html', {'products': products})
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+
+        if not form.is_valid():
+            return render(request, 'products/index.html', {'products': products,
+                                                           'form': form})
+        form.save()
+
+    return render(request, 'products/index.html', {'form': ProductForm(),
+                                                   'products': products})
 
 
 def getTest(request, product):
@@ -50,7 +60,6 @@ def showTest(request, product):
 
     if PING in tests:
         pings = PingProduct.objects.filter(product=product)
-
 
     return render(request, 'products/product_tests.html', {'pings': pings,
                                                            'product': productName})
