@@ -1085,6 +1085,9 @@
 
 /*Footer*/
 .footer {
+   	position:absolute;
+   	bottom:30px;
+   	width:100%;
 	color: #dadada;
 	background: #585f69;
 	padding: 20px 0 30px;
@@ -1159,6 +1162,9 @@
 
 /*Copyright*/
 .copyright {
+   	position:absolute;
+   	bottom:0px;
+   	width:100%;
 	font-size: 12px;
 	padding: 11px 0 7px;
 	background: #3e4753;
