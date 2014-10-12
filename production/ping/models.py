@@ -60,7 +60,7 @@ class PingProduct(models.Model):
     ping = models.ForeignKey('Ping')
     product = models.ForeignKey('product.Product')
     result = models.CharField(
-        _(u'Expected result'), max_length=10, choices=options, blank=True)
+        _(u'Expected result'), max_length=10, choices=options)
 
     class Meta:
         ordering = ['id']
