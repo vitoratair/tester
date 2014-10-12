@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container content">
+
+        <div class="headline">
+            <h2>Edition on product {{ product }}</h2>
+        </div>
+
+        <form action="." method="POST" class="sky-form">
+            {% csrf_token %}
+                <fieldset>
+                    <section>
+                        <label class="input">
+                            <label class="input" for="{{ form.name.id_for_label }}">
+                                <input type="text" name="{{form.name.name}}" value="{{ form.name.value }}">
+                            </label>
+                        </label>
+
+                        <div class="note note-error">
+                            {{ form.name.errors | striptags }}
+                        </div>
+                    </section>
+
+                    <section>
+                        <label class="input">
+                            <label class="input" for="{{ form.site.id_for_label }}">
+                                {% if form.site.value %}
+                                	<input type="text" name="{{form.site.name}}" value="{{ form.site.value }}">
+                                {% else %}
+                                	<input type="text" name="{{form.site.name}}" placeholder="{{ form.site.label }}">
+                                {% endif %}
+                            </label>
+                        </label>
+                        <div class="note note-error">
+                            {{ form.site.errors | striptags }}
+                        </div>
+                    </section>
+
+                    <section>
+                        <label class="select" for="{{ form.typeProduct.id_for_label }}">
+                            {{ form.typeProduct }}
+                            <i></i>
+                        </label>
+                    </section>
+
+                    <section>
+                        <label class="select" for="{{ form.accessMethod.id_for_label }}">
+                            {{ form.accessMethod }}
+                            <i></i>
+                        </label>
+                    </section>
+
+                    <section>
+                        <label class="select select-multiple" for="{{ form.test.id_for_label }}">
+                            {{ form.test }}
+                            <i></i>
+                        </label>
+                    </section>
+
+                </fieldset>
+
+                <footer>
+                    <button type="submit" class="btn-u">Submit</button>
+                    <button type="button" class="btn-u btn-u-default" onclick="window.history.back();">Back</button>
+                </footer>
+            </form>
+</div>
+{% endblock content %}

@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = patterns('production.product.views',
+                       url(r'^edit/(\d+)/$', 'edit', name='product'),
                        url(r'^create/$', 'createProduct', name='product'),
                        url(r'^delete/(\d+)/$', 'delete', name='product'),
                        url(r'^showTest/(\d+)/$', 'showTest', name='product'),

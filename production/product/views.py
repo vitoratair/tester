@@ -1,7 +1,6 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from production.product.models import Product
 from production.product.forms import ProductForm
-from production.ping.models import Ping
 from production.ping.models import PingProduct as PingProduct
 from django.core import serializers
 from production.product.testCommands import *
@@ -31,10 +30,6 @@ def getTest(request, product):
 
     """
 
-    # ids = Product.objects.values_list('id', flat=True).filter(pk=product)
-
-    # pings = Ping.objects.filter(ap_id__in=set(ids))
-
     pings = Product.objects.all()
 
     json = serializers.serialize(
@@ -44,8 +39,30 @@ def getTest(request, product):
 
 
 def delete(request, product):
+    """
+        Must be delete a product
+    """
 
     Product.objects.filter(pk=product).delete()
+    return HttpResponseRedirect('/product/list/')
+
+
+def edit(request, product):
+    """
+        Must be edit a product using django forms
+    """
+
+    if request.method == 'GET':
+        form = ProductForm(instance=Product.objects.get(pk=product))
+        return render(request, 'products/edit.html', {'form': form})
+
+    instance = Product.objects.get(pk=product)
+    form = ProductForm(request.POST or None, instance=instance)
+
+    if not form.is_valid():
+        return render(request, 'products/edit.html', {'form': form})
+
+    form.save()
     return HttpResponseRedirect('/product/list/')
 
 
@@ -56,7 +73,7 @@ def showTest(request, product):
 
     productName = Product.objects.filter(pk=product).get()
 
-    tests = Product.objects.values_list('test', flat=True).filter(pk=product[0])
+    Product.objects.values_list('test', flat=True).filter(pk=product[0])
 
     pings = PingProduct.objects.filter(product=product)
 
