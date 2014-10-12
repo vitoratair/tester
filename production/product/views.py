@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from production.product.models import Product
 from production.product.forms import ProductForm
 from production.ping.models import PingProduct as PingProduct
@@ -11,7 +12,16 @@ def list(request):
         Must be return a list of products or save a new product on database
     """
 
-    products = Product.objects.all()
+    paginator = Paginator(Product.objects.all(), 10)
+
+    page = request.GET.get('page')
+
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
 
     if request.method == 'POST':
         form = ProductForm(request.POST)
