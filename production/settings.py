@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 from decouple import config
 from dj_database_url import parse as db_url
-import os
-
 from unipath import Path
 BASE_DIR = Path(__file__).parent
 
@@ -47,7 +45,6 @@ INSTALLED_APPS = (
     'production.core',
     'production.product',
     'production.ping',
-    'production.iperf',
 )
 
 MIDDLEWARE_CLASSES = (
