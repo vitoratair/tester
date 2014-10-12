@@ -11,7 +11,7 @@ Scripts
 *~
 *.sqlite3
 .DS_Store
-production/staticfiles
+production/static
 media/
 .coverage
 _build
