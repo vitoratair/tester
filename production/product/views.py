@@ -62,7 +62,13 @@ def edit(request, product):
     if not form.is_valid():
         return render(request, 'products/edit.html', {'form': form})
 
+    hasPingBefore = Product.objects.filter(test=PING)
     form.save()
+    hasPingAfter = Product.objects.filter(test=PING)
+
+    if hasPingBefore != 0 and hasPingAfter == 0:
+        PingProduct.objects.filter(product=product).delete()
+
     return HttpResponseRedirect('/product/list/')
 
 
