@@ -24,9 +24,9 @@ def deleteProduct(request, ping, product):
     """
 
     PingProduct.objects.filter(pk=ping).delete()
-    pings = PingProduct.objects.filter(product=product)
+    pings = PingProduct.objects.select_related('ping').filter(product=product)
 
-    json = serializers.serialize("json", pings)
+    json = serializers.serialize("json", [element.ping for element in pings])
 
     return HttpResponse(json, mimetype='application/json')
 

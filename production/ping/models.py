@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class Ping(models.Model):
 
+    id = models.AutoField(primary_key=True)
     name = models.CharField(_(u'Ping Name'), max_length=100, unique=True)
     description = models.CharField(
         _(u'Ping description'), max_length=300, blank=True, null=True)

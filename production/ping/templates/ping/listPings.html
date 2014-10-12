@@ -1,3 +1,5 @@
+{% load ping_tags %}
+
 <div class="panel-group acc-v1" id="accordion-1">
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -14,29 +16,25 @@
             <table class="table table-striped" id="ping-table">
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>Name</th>
                   <th>Origin IP</th>
                   <th>Destination IP</th>
                   <th>Interval</th>
                   <th>Packet Number </th>
                   <th>Made by user</th>
-                  <th>Options</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
                 {%  for ping in pings.all %}
                 <tr>
-                  <td>{{ ping.id}}</td>
-                  <td>{{ ping.ping.name}}</td>
-                  <td>{{ ping.ping.ipOrigin }}</td>
-                  <td>{{ ping.ping.ipDestination }}</td>
-                  <td>{{ ping.ping.interval }}</td>
-                  <td>{{ ping.ping.packetNumber }}</td>
-                  <td>{{ ping.ping.setByUser }}</td>
+                  <td>{{ ping.ping.name | checkBlank }}</td>
+                  <td>{{ ping.ping.ipOrigin | checkBlank }}</td>
+                  <td>{{ ping.ping.ipDestination | checkBlank }}</td>
+                  <td>{{ ping.ping.interval | checkBlank }}</td>
+                  <td>{{ ping.ping.packetNumber | checkBlank}}</td>
+                  <td>{{ ping.ping.setByUser | checkBlank }}</td>
                   <td>
-                    <i class="fa fa-edit"></i>
-                    &nbsp;&nbsp;
                     <a href="#" onclick="deletePing('{{ping.id}}');" ><i class="fa fa-trash-o"></i></a>
                   </td>
                 </tr>
@@ -51,6 +49,17 @@
 
 <script type="text/javascript">
 
+  // Must be returned ' ' if the string as parameter is null
+  function checkBlank(string){
+
+    if (string == null){
+      return '';
+    }
+
+    return string;
+
+  }
+
   // Must be delete a ping of the system
   function deletePing(ping) {
     var product = '{{product.id}}';
@@ -64,19 +73,15 @@
           $("#ping-table tbody").append
           (
             '<tr>' +
-            '<td>' + item.pk + '</td>' +
-            '<td>' + item.fields.name + '</td>' +
-            '<td>' + item.fields.ipOrigin + '</td>' +
-            '<td>' + item.fields.ipDestination + '</td>' +
-            '<td>' + item.fields.interval + '</td>' +
-            '<td>' + item.fields.packetNumber + '</td>' +
-            '<td>' + item.fields.setByUser + '</td>' +
-            '<td>Pass or fail</td>' +
-            '<td>' +
-              '<i class="fa fa-edit"></i>' +
-               '&nbsp;&nbsp;' +
-              '<a href="#" onclick="deletePing('+ item.pk + ');" ><i class="fa fa-trash-o"></i></a>' +
-            '</td>' +
+              '<td>' + item.fields.name + '</td>' +
+              '<td>' + item.fields.ipOrigin + '</td>' +
+              '<td>' + checkBlank(item.fields.ipDestination) + '</td>' +
+              '<td>' + checkBlank(item.fields.interval) + '</td>' +
+              '<td>' + checkBlank(item.fields.packetNumber) + '</td>' +
+              '<td>' + checkBlank(item.fields.setByUser) + '</td>' +
+              '<td>' +
+                '<a href="#" onclick="deletePing('+ item.pk + ');" ><i class="fa fa-trash-o"></i></a>' +
+              '</td>' +
             '</tr>'
           )
         });
