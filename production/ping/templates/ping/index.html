@@ -49,6 +49,10 @@
 							<td>
 								<i class="fa fa-edit"></i>
 								 &nbsp;&nbsp;
+								<a onclick="addProduct('{{ping.id}}');" data-toggle="modal" data-target="#modalAddProduct">
+									<i class="fa fa-plus"></i>
+								</a>
+								&nbsp;&nbsp;
 								<a href="#" onclick="deletePing('{{ping.id}}');" ><i class="fa fa-trash-o"></i></a>
 							</td>
 		                </tr>
@@ -59,12 +63,102 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="modalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">
+            Success
+        </h4>
+      </div>
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalAddProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">
+            Add into a product
+        </h4>
+      </div>
+      <div class="modal-body">
+      		<form action="" class="sky-form">
+				<section>
+	                <label class="select">
+	                    <select id="product">
+	                        <option selected disabled>Select a product</option>
+	                        {% for product in products %}
+	                        	<option value="{{ product.id }}">{{ product.name }}</option>
+	                        {% endfor %}
+	                    </select>
+	                    <i></i>
+	                </label>
+	            </section>
+
+				<section>
+	                <label class="select">
+	                    <select id="result">
+	                        <option selected disabled>Select a result</option>
+	                        	<option value="0">Approved into the test</option>
+	                        	<option value="1">Failed into the test</option>
+	                    </select>
+	                    <i></i>
+	                </label>
+	            </section>
+	        </form>
+	      <div class="modal-footer">
+			<a href="" class="btn" data-dismiss="modal">Não</a>
+			<a href="" class="btn btn-danger" id="AddProduct">Sim</a>
+	      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
 
-	function deletePing(ping)
+	// Must be call the modal to add a product
+	function addProduct(ping)
 	{
+		$('#modalAddProduct').modal();
+
+		$("#AddProduct").click(function()
+		{
+			var product = $("#product option:selected").val();
+			var result = $("#result option:selected").val();
+
+			if (product != "Select a product")
+			{
+				if (result != "Select a result")
+				{
+					$.get( "/ping/addProduct/" + ping + "/" + product + "/" + result + "/", function() {
+						// put sucess message here
+					})
+
+					.fail(function() {
+						// put error message here
+					})
+				}
+			}
+		});
+	}
+
+	// Must be delete a ping of the system
+	function deletePing(ping) {
 		$.get( "/ping/delete/" + ping + "/", function(data){
-			console.log(data);
+
 			$("#default-table tbody").empty();
 
 	            $.each(data, function(i, item) {
@@ -83,6 +177,8 @@
 						'<td>' +
 							'<i class="fa fa-edit"></i>' +
 							 '&nbsp;&nbsp;' +
+							 '<a href="#" onclick="addProduct('+ item.pk + ');" ><i class="fa fa-plus"></i></a>' +
+							 '&nbsp;&nbsp;' +
 							'<a href="#" onclick="deletePing('+ item.pk + ');" ><i class="fa fa-trash-o"></i></a>' +
 						'</td>' +
 						'</tr>'
@@ -90,8 +186,6 @@
             });
 		});
 	}
-
-
 </script>
 
 

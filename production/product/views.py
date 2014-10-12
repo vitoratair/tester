@@ -58,8 +58,7 @@ def showTest(request, product):
 
     tests = Product.objects.values_list('test', flat=True).filter(pk=product[0])
 
-    if PING in tests:
-        pings = PingProduct.objects.filter(product=product)
+    pings = PingProduct.objects.filter(product=product)
 
     return render(request, 'products/product_tests.html', {'pings': pings,
                                                            'product': productName})

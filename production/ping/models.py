@@ -33,8 +33,8 @@ class Ping(models.Model):
 class Test(models.Model):
 
     options = (
-        ('PASS', 'Approved into the test'),
-        ('REPROVED', 'Failed into the test'),
+        ('0', 'Approved into the test'),
+        ('1', 'Failed into the test'),
     )
 
     product = models.ForeignKey('product.Product', related_name='product_tests')
@@ -52,8 +52,8 @@ class Test(models.Model):
 class PingProduct(models.Model):
 
     options = (
-        ('PASS', 'Approved into the test'),
-        ('REPROVED', 'Failed into the test'),
+        ('0', 'Approved into the test'),
+        ('1', 'Failed into the test'),
     )
 
     ping = models.ForeignKey('Ping')

@@ -9,6 +9,5 @@ class ProductForm(forms.ModelForm):
         super(ProductForm, self).__init__(*args, **kwargs)
         self.fields['typeProduct'].empty_label = "typeProduct"
 
-
     class Meta:
         model = Product
