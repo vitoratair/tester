@@ -43,13 +43,11 @@ def delete(request, ping):
 
 def addProduct(request, ping, product, result):
 
-    print  result
     try:
         a = PingProduct(ping_id=ping, product_id=product, result=result)
         a.save()
     except Exception, e:
         print e
-
 
     pings = Ping.objects.all()
     json = serializers.serialize("json", pings)
