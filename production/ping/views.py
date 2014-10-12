@@ -24,9 +24,11 @@ def deleteProduct(request, ping, product):
     """
 
     PingProduct.objects.filter(pk=ping).delete()
-    PingProduct.objects.filter(product=product)
+    pings = PingProduct.objects.filter(product=product)
 
-    return HttpResponseRedirect('/product/showTest/' + product + '/')
+    json = serializers.serialize("json", pings)
+
+    return HttpResponse(json, mimetype='application/json')
 
 
 def delete(request, ping):
