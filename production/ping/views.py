@@ -5,6 +5,7 @@ from django.core import serializers
 from production.ping.forms import PingForm
 from production.ping.models import Ping, PingProduct
 from production.product.models import Product
+from production.product.testCommands import PING
 
 
 @login_required(login_url='/')
@@ -15,7 +16,8 @@ def list(request):
 
     pings = Ping.objects.all()
 
-    products = Product.objects.all()
+    products = Product.objects.filter(test=PING).all()
+
     return render(request, 'ping/index.html', {'products': products,
                                                'pings': pings})
 
