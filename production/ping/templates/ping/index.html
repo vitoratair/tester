@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load ping_tags %}
+
 {% block content %}
 
 
@@ -39,7 +41,6 @@
 		                <th>Interval</th>
 		                <th>Packet Number </th>
 		                <th>Made by user</th>
-                    	<th>Result</th>
 		                <th>Options</th>
 		            </tr>
 		        </thead>
@@ -47,16 +48,13 @@
 		        	{%  for ping in pings %}
 		                <tr>
 		                    <td>{{ ping.id }}</td>
-		                    <td>{{ ping.name }}</td>
-		                    <td>{{ ping.ipOrigin }}</td>
-		                    <td>{{ ping.ipDestination }}</td>
-		                    <td>{{ ping.interval }}</td>
-		                    <td>{{ ping.packetNumber }}</td>
-							<td>{{ ping.setByUser }}</td>
-							<td>Pass or fail</td>
+		                    <td>{{ ping.name | checkBlank }}</td>
+		                    <td>{{ ping.ipOrigin | checkBlank }}</td>
+		                    <td>{{ ping.ipDestination | checkBlank }}</td>
+		                    <td>{{ ping.interval | checkBlank }}</td>
+		                    <td>{{ ping.packetNumber | checkBlank }}</td>
+							<td>{{ ping.setByUser | checkBlank }}</td>
 							<td>
-								<i class="fa fa-edit"></i>
-								 &nbsp;&nbsp;
 								<a onclick="addProduct('{{ping.id}}');" data-toggle="modal" data-target="#modalAddProduct">
 									<i class="fa fa-plus"></i>
 								</a>
@@ -143,6 +141,16 @@
 
 <script type="text/javascript">
 
+	  // Must be returned ' ' if the string as parameter is null
+	function checkBlank(string){
+
+		if (string == null){
+			return '';
+		}
+
+		return string;
+	}
+
 	// Must be call the modal to add a product
 	function addProduct(ping)
 	{
@@ -171,34 +179,35 @@
 
 	// Must be delete a ping of the system
 	function deletePing(ping) {
-		$.get( "/ping/delete/" + ping + "/", function(data){
 
-			$("#default-table tbody").empty();
+	    $.get( "/ping/delete/" + ping + "/", function(data){
+	    	console.log(data)
+	      $("#default-table tbody").empty();
 
-	            $.each(data, function(i, item) {
+	        $.each(data, function(i, item) {
+	          console.log(data);
+	          $("#default-table tbody").append
+	          (
+	            '<tr>' +
+					'<td>' + item.pk + '</td>' +
+					'<td>' + item.fields.name + '</td>' +
+					'<td>' + item.fields.ipOrigin + '</td>' +
+					'<td>' + checkBlank(item.fields.ipDestination) + '</td>' +
+					'<td>' + checkBlank(item.fields.interval) + '</td>' +
+					'<td>' + checkBlank(item.fields.packetNumber) + '</td>' +
+					'<td>' + checkBlank(item.fields.setByUser) + '</td>' +
+					'<td>' +
+						'<a onclick="addProduct('+ item.pk +');" data-toggle="modal" data-target="#modalAddProduct">' +
+							'<i class="fa fa-plus"></i>' +
+						'</a>' +
+						'&nbsp;&nbsp;&nbsp;&nbsp;' +
+	                	'<a href="#" onclick="deletePing('+ item.pk + ');" ><i class="fa fa-trash-o"></i></a>' +
+	              '</td>' +
+	            '</tr>'
+	          )
+	        });
+	    });
 
-					$("#default-table tbody").append
-					(
-						'<tr>' +
-						'<td>' + item.pk + '</td>' +
-						'<td>' + item.fields.name + '</td>' +
-						'<td>' + item.fields.ipOrigin + '</td>' +
-						'<td>' + item.fields.ipDestination + '</td>' +
-						'<td>' + item.fields.interval + '</td>' +
-						'<td>' + item.fields.packetNumber + '</td>' +
-						'<td>' + item.fields.setByUser + '</td>' +
-						'<td>Pass or fail</td>' +
-						'<td>' +
-							'<i class="fa fa-edit"></i>' +
-							 '&nbsp;&nbsp;' +
-							 '<a href="#" onclick="addProduct('+ item.pk + ');" ><i class="fa fa-plus"></i></a>' +
-							 '&nbsp;&nbsp;' +
-							'<a href="#" onclick="deletePing('+ item.pk + ');" ><i class="fa fa-trash-o"></i></a>' +
-						'</td>' +
-						'</tr>'
-					)
-            });
-		});
 	}
 </script>
 
