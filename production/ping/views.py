@@ -1,7 +1,8 @@
 # coding: utf-8
-from django.shortcuts import render, HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
+from production.ping.forms import PingForm
 from production.ping.models import Ping, PingProduct
 from production.product.models import Product
 
@@ -11,11 +12,29 @@ def list(request):
     """
         Must be return the list of ping tests
     """
+
     pings = Ping.objects.all()
 
     products = Product.objects.all()
     return render(request, 'ping/index.html', {'products': products,
                                                'pings': pings})
+
+
+def add(request):
+    """
+        Must be return the template to save a new ping
+    """
+
+    if request.method == 'GET':
+        return render(request, 'ping/add.html', {'form': PingForm()})
+
+    form = PingForm(request.POST)
+
+    if not form.is_valid():
+        return render(request, 'ping/add.html', {'form': form})
+
+    form.save()
+    return HttpResponseRedirect('/ping/')
 
 
 def deleteProduct(request, ping, product):

@@ -1,6 +1,6 @@
 # coding: utf-8
 from django import forms
-from production.ping.models import PingProduct
+from production.ping.models import PingProduct, Ping
 
 
 class PingProductForm(forms.ModelForm):
@@ -12,3 +12,9 @@ class PingProductForm(forms.ModelForm):
 
     class Meta:
         model = PingProduct
+
+
+class PingForm(forms.ModelForm):
+
+    class Meta:
+        model = Ping

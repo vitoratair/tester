@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container content">
+        <div class="headline">
+            <h2>Add a new ping</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6 col-md-offset-3">
+                    <form action="." method="POST" id="sky-form4" class="sky-form">
+                        {% csrf_token %}
+                        <fieldset>
+                            <div class="row">
+                                <section class="col col-6">
+                                    <label class="input">
+                                        <label class="input" for="{{ form.name.id_for_label }}">
+                                            <input type="text" name="{{form.name.name}}" placeholder="{{ form.name.label }}">
+                                        </label>
+                                    </label>
+                                    <div class="note note-error">
+                                        {{ form.name.errors | striptags }}
+                                    </div>
+                                </section>
+                                <section class="col col-6">
+                                    <label class="input">
+                                        <label class="input" for="{{ form.description.id_for_label }}">
+                                            <input type="text" name="{{form.description.name}}" placeholder="{{ form.description.label }}">
+                                        </label>
+                                    </label>
+                                    <div class="note note-error">
+                                        {{ form.description.errors | striptags }}
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="row">
+                                <section class="col col-6">
+                                    <label class="input">
+                                        <label class="input" for="{{ form.ipOrigin.id_for_label }}">
+                                            <input type="text" name="{{form.ipOrigin.name}}" placeholder="{{ form.ipOrigin.label }}">
+                                        </label>
+                                    </label>
+                                    <div class="note note-error">
+                                        {{ form.ipOrigin.errors | striptags }}
+                                    </div>
+                                </section>
+                                <section class="col col-6">
+                                    <label class="input">
+                                        <label class="input" for="{{ form.ipDestination.id_for_label }}">
+                                            <input type="text" name="{{form.ipDestination.name}}" placeholder="{{ form.ipDestination.label }}">
+                                        </label>
+                                    </label>
+                                    <div class="note note-error">
+                                        {{ form.ipDestination.errors | striptags }}
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="row">
+                                <section class="col col-6">
+                                    <label class="input">
+                                        <label class="input" for="{{ form.interval.id_for_label }}">
+                                            <input type="text" name="{{form.interval.name}}" placeholder="{{ form.interval.label }}">
+                                        </label>
+                                    </label>
+                                    <div class="note note-error">
+                                        {{ form.interval.errors | striptags }}
+                                    </div>
+                                </section>
+                                <section class="col col-6">
+                                    <label class="input">
+                                        <label class="input" for="{{ form.packetNumber.id_for_label }}">
+                                            <input type="text" name="{{form.packetNumber.name}}" placeholder="{{ form.packetNumber.label }}">
+                                        </label>
+                                    </label>
+                                    <div class="note note-error">
+                                        {{ form.packetNumber.errors | striptags }}
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="row">
+                                <section class="col-md-12">
+                                    <label class="input">
+                                        <label class="input" for="{{ form.setByUser.id_for_label }}">
+                                            <input type="text" name="{{form.setByUser.name}}" placeholder="{{ form.setByUser.label }}">
+                                        </label>
+                                    </label>
+                                    <div class="note note-error">
+                                        {{ form.setByUser.errors | striptags }}
+                                    </div>
+                                </section>
+                            </div>
+                        </fieldset>
+                        <footer>
+                            <button type="submit" class="button">Submit</button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
