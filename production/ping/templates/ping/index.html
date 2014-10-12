@@ -90,38 +90,44 @@
             <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
         </button>
         <h4 class="modal-title" id="myModalLabel">
-            Add into a product
+            Add ping test into a product
         </h4>
       </div>
       <div class="modal-body">
       		<form action="" class="sky-form">
-				<section>
-	                <label class="select">
-	                    <select id="product">
-	                        <option selected disabled>Select a product</option>
-	                        {% for product in products %}
-	                        	<option value="{{ product.id }}">{{ product.name }}</option>
-	                        {% endfor %}
-	                    </select>
-	                    <i></i>
-	                </label>
-	            </section>
 
-				<section>
-	                <label class="select">
-	                    <select id="result">
-	                        <option selected disabled>Select a result</option>
-	                        	<option value="0">Approved into the test</option>
-	                        	<option value="1">Failed into the test</option>
-	                    </select>
-	                    <i></i>
-	                </label>
-	            </section>
+				<fieldset>
+					<section>
+		                <label class="select">
+		                    <select id="product">
+		                        <option selected disabled>Select a product</option>
+		                        {% for product in products %}
+		                        	<option value="{{ product.id }}">{{ product.name }}</option>
+		                        {% endfor %}
+		                    </select>
+		                    <i></i>
+		                </label>
+		            </section>
+
+					<section>
+		                <label class="select">
+		                    <select id="result">
+		                        <option selected disabled>Select a result</option>
+		                        	<option value="0">Approved into the test</option>
+		                        	<option value="1">Failed into the test</option>
+		                    </select>
+		                    <i></i>
+		                </label>
+		            </section>
+
+	        	</fieldset>
+
+                <footer>
+					<a href="" class="btn-u btn-u-default" data-dismiss="modal">back</a>
+					<a href="" class="btn-u" id="AddProduct">Submit</a>
+                </footer>
+
 	        </form>
-	      <div class="modal-footer">
-			<a href="" class="btn" data-dismiss="modal">Não</a>
-			<a href="" class="btn btn-danger" id="AddProduct">Sim</a>
-	      </div>
       </div>
     </div>
   </div>
