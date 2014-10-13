@@ -6,7 +6,7 @@
 # Tester
 ======
 
-![Logo](production/core/static/assets/img/jokers1.jpg)
+![Logo](https://wh.intelbras.com.br/git/hackathon/tester/raw/master/production/core/static/assets/img/jokers1.jpg)
 
 ## What is it?
 
