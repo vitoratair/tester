@@ -4,7 +4,6 @@ from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 import commands
 import json
-import time
 from production.core.production_commands import *
 from production.product.models import Product
 
