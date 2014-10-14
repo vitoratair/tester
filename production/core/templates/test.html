@@ -47,6 +47,12 @@
         $("#loading").append("<img src='{{STATIC_URL}}assets/img/ajax-loader.gif'>");
     }
 
+    function initializeTests() {
+        $.get("/ping/initializeTests/", function(data){
+            console.log('aoushdoiausd');
+        })
+    }
+
     function statusBoardRequest() {
         $.get("/core/testStatus/", function(data) {
 
@@ -54,6 +60,7 @@
                 if (data.message == 'BOARD_FOUND') {
                     showMessageBoardFound();
                     clearInterval(loop);
+                    initializeTests();
                 } else {
                     showMessageBoardNotFound();
                 }

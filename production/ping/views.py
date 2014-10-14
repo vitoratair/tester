@@ -5,7 +5,8 @@ from django.core import serializers
 from production.ping.forms import PingForm
 from production.ping.models import Ping, PingProduct
 from production.product.models import Product
-from production.product.testCommands import PING
+from production.ping.library.execPing import ExecPing
+from production.core.headers import *
 
 
 @login_required(login_url='/')
@@ -62,6 +63,9 @@ def delete(request, ping):
 
 
 def addProduct(request, ping, product, result):
+    """
+    Must be saved a ping test into a product
+    """
 
     try:
         a = PingProduct(ping_id=ping, product_id=product, result=result)
@@ -73,3 +77,16 @@ def addProduct(request, ping, product, result):
     json = serializers.serialize("json", pings)
 
     return HttpResponse(json, mimetype='application/json')
+
+
+def initializeTests(request):
+    """
+    Must be initialized all ping tests of a product
+    """
+
+    defaultProduct = Product.objects.filter(default=DEFAULT).get()
+    tests = PingProduct.objects.filter(product=defaultProduct.id).all()
+
+    if defaultProduct.accessMethod == SSH:
+        testsPing = ExecPing(tests,  defaultProduct.id)
+        testsPing.checkLocalhost()
