@@ -30,6 +30,7 @@ def list(request):
             return render(request, 'products/index.html', {'products': products,
                                                            'form': form})
         form.save()
+        return HttpResponseRedirect('/product/list/')
 
     return render(request, 'products/index.html', {'form': ProductForm(),
                                                    'products': products})
