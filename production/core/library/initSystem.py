@@ -1,27 +1,26 @@
-#coding: utf-8
+# coding: utf-8
 
 from production.product.models import TypeProduct
 
 
 class InitSystem():
-	"""
-		Class responsible to implement all methods to initialization
-	"""
 
-	def __init__(self):
-		self.initializeTypeProduct()
+    """
+            Class responsible to implement all methods to initialization
+    """
 
-	def initializeTypeProduct(self):
-		"""
-			Must be initilize the TypeProduct class with some values
-			# Access Point / Access points
-			# Switch / Switches
-		"""
+    def __init__(self):
+        self.initializeTypeProduct()
 
-		TypeProduct.objects.all().delete()
+    def initializeTypeProduct(self):
+        """
+            Must be initilize the TypeProduct class with some values
+            # Access Point / Access points
+            # Switch / Switches
+        """
 
-		ap = TypeProduct(name='Access Point', description='Access points')
-		switch = TypeProduct(name='Switch', description='Switches')
+        TypeProduct(id=1, name='Access Point',
+                    description='Access points').save()
 
-		ap.save()
-		switch.save()
+        TypeProduct(id=2, name='Switch',
+                    description='Switches').save()
