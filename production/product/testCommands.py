@@ -1,2 +1,0 @@
-PING = 1
-IPERF = 2
