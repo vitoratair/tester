@@ -1,5 +1,4 @@
 {% load ping_tags %}
-
 <div class="panel-group acc-v1" id="accordion-1">
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -16,6 +15,7 @@
             <table class="table table-striped" id="ping-table">
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Name</th>
                   <th>Origin IP</th>
                   <th>Destination IP</th>
@@ -26,8 +26,9 @@
                 </tr>
               </thead>
               <tbody>
-                {%  for ping in pings.all %}
+                {%  for ping in pings %}
                 <tr>
+                  <td>{{ ping.id }}</td>
                   <td>{{ ping.ping.name | checkBlank }}</td>
                   <td>{{ ping.ping.ipOrigin | checkBlank }}</td>
                   <td>{{ ping.ping.ipDestination | checkBlank }}</td>
@@ -43,9 +44,27 @@
           </table>
         </div>
       </div>
+      <div class="col-md-4 col-md-offset-5" >
+        <div class="pagination">
+          <ul class="pager">
+            {% if pings.has_previous %}
+              <li><a href="?page={{ pings.previous_page_number }}" >Previous</a></li>
+            {% else %}
+              <li><a href="" class="btn disabled" >Previous</a></li>
+            {% endif %}
+
+            {% if pings.has_next %}
+              <li><a href="?page={{ pings.next_page_number }}">Next</a></li>
+            {% else %}
+              <li><a href="" class="btn disabled" >Next</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
 
 <script type="text/javascript">
 
@@ -62,30 +81,10 @@
 
   // Must be delete a ping of the system
   function deletePing(ping) {
+
     var product = '{{product.id}}';
+    window.location = '/ping/deleteProduct/' + ping + '/' + product + '/';
 
-    $.get( "/ping/deleteProduct/" + ping + "/" + product + "/", function(data){
-
-      $("#ping-table tbody").empty();
-
-        $.each(data, function(i, item) {
-          console.log(data);
-          $("#ping-table tbody").append
-          (
-            '<tr>' +
-              '<td>' + item.fields.name + '</td>' +
-              '<td>' + item.fields.ipOrigin + '</td>' +
-              '<td>' + checkBlank(item.fields.ipDestination) + '</td>' +
-              '<td>' + checkBlank(item.fields.interval) + '</td>' +
-              '<td>' + checkBlank(item.fields.packetNumber) + '</td>' +
-              '<td>' + checkBlank(item.fields.setByUser) + '</td>' +
-              '<td>' +
-                '<a href="#" onclick="deletePing('+ item.pk + ');" ><i class="fa fa-trash-o"></i></a>' +
-              '</td>' +
-            '</tr>'
-          )
-        });
-    });
   }
 
 </script>

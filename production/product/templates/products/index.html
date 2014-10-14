@@ -55,9 +55,13 @@
                  <ul class="pager">
                     {% if products.has_previous %}
                         <li><a href="?page={{ products.previous_page_number }}">Previous</a></li>
+                    {% else %}
+                      <li><a href="" class="btn disabled" >Previous</a></li>
                     {% endif %}
                     {% if products.has_next %}
                         <li><a href="?page={{ products.next_page_number }}">Next</a></li>
+                    {% else %}
+                      <li><a href="" class="btn disabled" >Next</a></li>
                     {% endif %}
                     </ul>
                 </div>

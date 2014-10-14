@@ -4,7 +4,7 @@ from production.product.models import Product
 from production.product.forms import ProductForm
 from production.ping.models import PingProduct as PingProduct
 from django.core import serializers
-from production.product.testCommands import *
+from production.core.headers import *
 
 
 def list(request):
@@ -12,7 +12,7 @@ def list(request):
         Must be return a list of products or save a new product on database
     """
 
-    paginator = Paginator(Product.objects.all(), 10)
+    paginator = Paginator(Product.objects.all(), PAGE_LIMIT)
 
     page = request.GET.get('page')
 
@@ -94,7 +94,18 @@ def showTest(request, product):
     tests = Product.objects.values_list('test', flat=True).filter(pk=product[0])
 
     if PING in tests:
-        pings = PingProduct.objects.filter(product=product)
 
+        paginator = Paginator(PingProduct.objects.filter(product=product), PAGE_LIMIT)
+
+        page = request.GET.get('page')
+
+        try:
+            pings = paginator.page(page)
+        except PageNotAnInteger:
+            pings = paginator.page(1)
+        except EmptyPage:
+            pings = paginator.page(paginator.num_pages)
+
+        print pings
     return render(request, 'products/product_tests.html', {'pings': pings,
                                                            'product': productName})
