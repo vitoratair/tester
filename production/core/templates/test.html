@@ -13,8 +13,8 @@
     <br>
 
     <div class="margin-bottom-40" align="center">
-        <div id="startTest">
-            <a href="#" onclick="startTest();" class="bnt btn-u">START TEST</a>
+        <div id="checkBoard">
+            <a href="#" onclick="checkBoard();" class="bnt btn-u">START TEST</a>
         </div>
     </div>
 
@@ -31,33 +31,44 @@
 
 <script type="text/javascript">
 
-function startTest()
-{
-    $("#startTest").empty();
+    var loop;
 
-    window.setInterval(function() {
-            $.get( "/core/testStatus/", function( data ) {
+    function showMessageBoardFound() {
+        $("#message").empty();
+        $("#loading").empty();
+        $("#message").append("<h2>Test in progress, please wait!!!!</h2>");
+        $("#loading").append("<img src='{{STATIC_URL}}assets/img/ajax-loader.gif'>");
+    }
 
-                if (data.message != undefined)
-                {
-                    if (data.message == 'Board found')
-                    {
-                        $( "#message" ).empty();
-                        $( "#loading" ).empty();
-                        $( "#message" ).append( "<h2>Test in progress, please wait!!!!</h2>" );
-                        $( "#loading" ).append( "<img src='{{STATIC_URL}}assets/img/ajax-loader.gif'>" );
-                    }
-                    else
-                    {
-                        $( "#message" ).empty();
-                        $( "#loading" ).empty();
-                        $( "#message" ).append( "<h2> " + data.message +  "</h2>" );
-                        $( "#loading" ).append( "<img src='{{STATIC_URL}}assets/img/ajax-loader.gif'>" );
-                    }
+    function showMessageBoardNotFound() {
+        $("#message").empty();
+        $("#loading").empty();
+        $("#message").append("<h2>Searching a board ... </h2>");
+        $("#loading").append("<img src='{{STATIC_URL}}assets/img/ajax-loader.gif'>");
+    }
+
+    function statusBoardRequest() {
+        $.get("/core/testStatus/", function(data) {
+
+            if (data.message != undefined) {
+                if (data.message == 'BOARD_FOUND') {
+                    showMessageBoardFound();
+                    clearInterval(loop);
+                } else {
+                    showMessageBoardNotFound();
                 }
-            });
-    }, 1000);
-}
+            }
+        });
+    }
+
+    function checkBoard() {
+        $("#checkBoard").empty();
+
+        loop = setInterval(function() {
+            statusBoardRequest();
+        }, 1000);
+    }
+
 </script>
 
 {% endblock content %}
