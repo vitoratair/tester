@@ -4,8 +4,9 @@ from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 import commands
 import json
-from production.core.production_commands import *
+from production.core.headers import *
 from production.product.models import Product
+from production.core.models import Information
 
 
 @login_required(login_url='/')
@@ -53,10 +54,12 @@ def testStatus(request):
 
 def getStatus():
     """
-            Must be return the status on ethernet device
+        Must be return the status on ethernet device
     """
 
-    status = commands.getoutput("ifconfig en32323")
+    interface = Information.objects.filter(pk=1).get().interface
+
+    status = commands.getoutput("ifconfig " + interface)
 
     if status.find(ACTIVE_VALUE) == NOT_FIND:
         return False
