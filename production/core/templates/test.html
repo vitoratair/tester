@@ -33,23 +33,25 @@
 
     var loop;
 
-    function showMessageBoardFound() {
+    function showMessage(message) {
         $("#message").empty();
         $("#loading").empty();
-        $("#message").append("<h2>Test in progress, please wait!!!!</h2>");
-        $("#loading").append("<img src='{{STATIC_URL}}assets/img/ajax-loader.gif'>");
+        $("#message").append("<h2>" + message + "</h2>");
     }
 
-    function showMessageBoardNotFound() {
+    function showMessageWithLoading(message) {
         $("#message").empty();
         $("#loading").empty();
-        $("#message").append("<h2>Searching a board ... </h2>");
+        $("#message").append("<h2>" + message + "</h2>");
         $("#loading").append("<img src='{{STATIC_URL}}assets/img/ajax-loader.gif'>");
     }
 
     function initializeTests() {
-        $.get("/ping/initializeTests/", function(data){
-            console.log('aoushdoiausd');
+        $.get("/ping/initializeTests/", function(data) {
+
+            if (data.data == 'Finish') {
+                showMessage('Please change the board');
+            }
         })
     }
 
@@ -58,11 +60,11 @@
 
             if (data.message != undefined) {
                 if (data.message == 'BOARD_FOUND') {
-                    showMessageBoardFound();
+                    showMessageWithLoading('Test in progress, please wait!!!!');
                     clearInterval(loop);
                     initializeTests();
                 } else {
-                    showMessageBoardNotFound();
+                    showMessageWithLoading('Searching a board ...');
                 }
             }
         });

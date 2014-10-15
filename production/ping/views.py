@@ -2,6 +2,7 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
+import json
 from production.ping.forms import PingForm
 from production.ping.models import Ping, PingProduct
 from production.product.models import Product
@@ -90,3 +91,5 @@ def initializeTests(request):
     if defaultProduct.accessMethod == SSH:
         testsPing = ExecPing(tests,  defaultProduct.id)
         testsPing.checkLocalhost()
+
+    return HttpResponse(json.dumps({'data': 'Finish'}), mimetype="application/json")
