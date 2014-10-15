@@ -29,54 +29,74 @@
 </div>
 
 
-<script type="text/javascript">
+<script type = "text/javascript">
 
-    var loop;
+var loop;
 
-    function showMessage(message) {
-        $("#message").empty();
-        $("#loading").empty();
-        $("#message").append("<h2>" + message + "</h2>");
-    }
+function showMessage(message) {
+    $("#message").empty();
+    $("#loading").empty();
+    $("#message").append("<h2>" + message + "</h2>");
+}
 
-    function showMessageWithLoading(message) {
-        $("#message").empty();
-        $("#loading").empty();
-        $("#message").append("<h2>" + message + "</h2>");
-        $("#loading").append("<img src='{{STATIC_URL}}assets/img/ajax-loader.gif'>");
-    }
+function showMessageWithLoading(message) {
+    $("#message").empty();
+    $("#loading").empty();
+    $("#message").append("<h2>" + message + "</h2>");
+    $("#loading").append("<img src='{{STATIC_URL}}assets/img/ajax-loader.gif'>");
+}
 
-    function initializeTests() {
-        $.get("/ping/initializeTests/", function(data) {
+function waitToInterfaceDown() {
 
-            if (data.data == 'Finish') {
+    $.get("/core/testStatus/", function(data) {
+
+        if (data.message != undefined) {
+            if (data.message == 'BOARD_NOT_FOUND') {
+                clearInterval(loop);
+                checkBoard();
+            } else {
                 showMessage('Please change the board');
             }
-        })
-    }
+        }
+    })
 
-    function statusBoardRequest() {
-        $.get("/core/testStatus/", function(data) {
+}
 
-            if (data.message != undefined) {
-                if (data.message == 'BOARD_FOUND') {
-                    showMessageWithLoading('Test in progress, please wait!!!!');
-                    clearInterval(loop);
-                    initializeTests();
-                } else {
-                    showMessageWithLoading('Searching a board ...');
-                }
+function initializeTests() {
+    $.get("/ping/initializeTests/", function(data) {
+
+        if (data.data == 'Finish') {
+            showMessage('Please change the board');
+
+            loop = setInterval(function() {
+                waitToInterfaceDown();
+            }, 500);
+        }
+    })
+}
+
+function statusBoardRequest() {
+    $.get("/core/testStatus/", function(data) {
+
+        if (data.message != undefined) {
+            if (data.message == 'BOARD_FOUND') {
+                showMessageWithLoading('Test in progress, please wait!!!!');
+                clearInterval(loop);
+                initializeTests();
+            } else {
+                showMessageWithLoading('Searching a board ...');
             }
-        });
-    }
+        }
+    });
+}
 
-    function checkBoard() {
-        $("#checkBoard").empty();
+function checkBoard() {
+    $("#checkBoard").empty();
 
-        loop = setInterval(function() {
-            statusBoardRequest();
-        }, 1000);
-    }
+    loop = setInterval(function() {
+        statusBoardRequest();
+    }, 1000);
+}
 
 </script>
 
