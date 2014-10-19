@@ -4,6 +4,8 @@
 DEFAULT = 1
 NOT_DEFAULT = 2
 LOCALHOST = '127.0.0.1'
+SSH_USER = 'root'
+SSH_PASSWORD = 'password'
 
 ###########################
 
