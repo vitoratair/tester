@@ -22,6 +22,7 @@ class ExecPing(object):
 
         self.product = product
         self.testList = tests
+        env.timeout = 5
         env.user = sshUser
         env.password = sshPassword
         self.checkLocalhost()
