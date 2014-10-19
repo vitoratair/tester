@@ -1,6 +1,11 @@
 # coding: utf-8
 from production.core.headers import *
 from production.ping.models import Test as PingTest
+from fabric import tasks
+from fabric.api import run
+from fabric.api import settings
+from fabric.api import env
+from fabric.network import disconnect_all
 import os
 
 
@@ -10,13 +15,16 @@ class ExecPing(object):
         Class responsible to implement all methods to ping access
     """
 
-    def __init__(self, tests, product):
+    def __init__(self, tests, product, sshUser, sshPassword):
         """
         Class constructor, must be set the values passed by parameter
         """
 
         self.product = product
         self.testList = tests
+        env.user = sshUser
+        env.password = sshPassword
+        self.checkLocalhost()
 
     def savePingResult(self, resultPing, ping):
         """
@@ -32,6 +40,7 @@ class ExecPing(object):
         """
             Must be returned a string with the complete ping test
         """
+
         command = 'ping '
 
         if test.packetNumber is not None:
@@ -43,6 +52,31 @@ class ExecPing(object):
             command = command + ' -s ' + str(test.interval)
 
         return command + ' ' + str(test.ipDestination)
+
+    def execCommand(self, tests):
+        """
+            Must be exec a command from a external machine
+        """
+
+        resultPing = PASSED
+
+        for test in tests:
+            with settings(parallel=False, host_string=test.ipOrigin):
+                try:
+                    run(self.getCommandPing(test))
+                except:
+                    resultPing = REPROVED
+
+                self.savePingResult(resultPing, test.id)
+
+    def execPingByExternalIp(self, tests):
+        """
+            Must be done a ping test from of a external IP
+        """
+
+        tasks.execute(self.execCommand, tests)
+
+        disconnect_all()
 
     def execPingByLocalhost(self, tests):
         """
@@ -59,7 +93,7 @@ class ExecPing(object):
 
     def checkLocalhost(self):
         """
-            Must be checked if a test should be made from localhost
+            Must be checked if a test should be made from localhost or not
         """
         localhostTest = []
         externalIpTest = []
@@ -71,3 +105,4 @@ class ExecPing(object):
                 externalIpTest.append(test.ping)
 
         self.execPingByLocalhost(localhostTest)
+        self.execPingByExternalIp(externalIpTest)
