@@ -89,7 +89,6 @@ def initializeTests(request):
     tests = PingProduct.objects.filter(product=defaultProduct.id).all()
 
     if defaultProduct.accessMethod == SSH:
-        testsPing = ExecPing(tests,  defaultProduct.id)
-        testsPing.checkLocalhost()
+        testsPing = ExecPing(tests, defaultProduct.id, SSH_USER, SSH_PASSWORD)
 
     return HttpResponse(json.dumps({'data': 'Finish'}), mimetype="application/json")
